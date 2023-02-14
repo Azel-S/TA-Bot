@@ -8,7 +8,7 @@
                         <input matInput type="courseID" name="courseID" [(ngModel)]="courseID">
                     </mat-form-field>
 
-                    <button mat-raised-button type="submit" color="accent" (click)="student()">Login</button>
+                    <button mat-raised-button type="submit" color="accent" (click)="student()" [disabled]="!courseID">Login</button>
                 </form>
             </mat-tab>
             <mat-tab label="Teacher">
@@ -23,7 +23,7 @@
                         <input matInput type="password" name="password" [(ngModel)]="password">
                     </mat-form-field>
 
-                    <button mat-raised-button type="submit" color="accent" (click)="teacher()">Login</button>
+                    <button mat-raised-button type="submit" color="accent" (click)="teacher()"  [disabled]="!username || !password">Login</button>
                 </form>
             </mat-tab>
             <mat-tab label="Register">
@@ -43,7 +43,7 @@
                         <input matInput type="password" name="confirmPassword" [(ngModel)]="confirmPassword">
                     </mat-form-field>
 
-                    <button mat-raised-button type="submit" color="accent" (click)="register(regForm.value)">Register</button>
+                    <button mat-raised-button type="submit" color="accent" [disabled]="!username || !password || !confirmPassword" (click)="register(regForm.value)">Register</button>
                 </form>
             </mat-tab>
         </mat-tab-group>     

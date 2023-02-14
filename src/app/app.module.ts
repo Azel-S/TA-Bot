@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from '@angular/cdk/layout';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // Custom Components
 import { AppComponent } from './app.component';
@@ -15,6 +15,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { StudentViewComponent } from './student-view/student-view.component';
 import { TeacherViewComponent } from './teacher-view/teacher-view.component';
 import { CourseViewComponent } from './course-view/course-view.component';
+import { ProfileComponent } from './profile/profile.component';
+import { AuthGuard } from './auth.guard';
+import { JwtInterceptor } from './jwt.interceptor';
 
 // Material Modules
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -30,6 +33,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 
+
 // Services
 
 const routes: Routes =
@@ -39,6 +43,7 @@ const routes: Routes =
   { path: 'student-view', component: StudentViewComponent },
   { path: 'teacher-view', component: TeacherViewComponent },
   { path: 'course-view', component: CourseViewComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: '',   redirectTo: '/login', pathMatch: 'full' }
 ]
 
@@ -53,6 +58,7 @@ const routes: Routes =
     TeacherViewComponent,
     CourseViewComponent,
     SidebarComponent,
+    ProfileComponent,
   ],
   imports:
   [
@@ -76,7 +82,11 @@ const routes: Routes =
     MatDividerModule,
     MatListModule
   ],
-  providers: [],
+  exports: [RouterModule],
+  providers:
+  [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 
