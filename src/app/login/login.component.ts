@@ -40,7 +40,7 @@ export class LoginComponent {
       })
       */
 
-      this.http.post('http://localhost:3306/register', {
+      this.http.post('http://localhost:8080/register', {
         firstName: "Test_F",
         lastName: "Test_L",
         email: this.username,
