@@ -13,7 +13,6 @@ export class JwInterceptor implements HttpInterceptor {
                 setHeaders: { Authorization: `Bearer ${localStorage.getItem('token')}` }
             });
         }
-
         return next.handle(request);
     }
 }
