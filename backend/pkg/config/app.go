@@ -303,6 +303,18 @@ func (a *App) TestPOST(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, map[string]string{"username": "successPost"})
 }
 
+func (a *App) TestDialogFlow(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("DialogFlow recieved...")
+	setCORSHeader(&w, r)
+
+	if (*r).Method == "OPTIONS" {
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
+	respondWithJSON(w, http.StatusOK, map[string]string{"username": "successPost"})
+}
+
 // Sets header for CORS. Allows for communication between Angular and GO on different ports.
 func setCORSHeader(w *http.ResponseWriter, req *http.Request) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
@@ -320,4 +332,6 @@ func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/users/{id:[0-9]}", a.GetUser).Methods("GET")
 	a.Router.HandleFunc("/users/{id:[0-9]}", a.UpdateUser).Methods("PUT")
 	a.Router.HandleFunc("/users/{id:[0-9]}", a.DeleteUser).Methods("DELETE")
+
+	a.Router.HandleFunc("/dialogflow/", a.TestDialogFlow).Methods("POST")
 }
