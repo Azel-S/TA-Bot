@@ -304,7 +304,23 @@ func (a *App) TestPOST(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) TestDialogFlow(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("DialogFlow recieved...")
+	fmt.Println("DialogFlow recieved with " + "...")
+
+	var c string
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&c); err != nil {
+		fmt.Println("Error")
+	}
+
+	/*
+		vars := mux.Vars(r)
+		color, err := strconv.Atoi(vars["color"])
+
+		fmt.Println(color)
+		if err != null {
+		}
+	*/
+
 	setCORSHeader(&w, r)
 
 	if (*r).Method == "OPTIONS" {
